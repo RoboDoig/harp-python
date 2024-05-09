@@ -219,8 +219,10 @@ def _create_register_parser(device: Model, name: str, params: _ReaderParams):
 
         reader = _compose_parser(parser, reader, params)
         return RegisterReader(register, reader)
+    
+    columns = [name] if register.length == 1 else [f"{name}_{i}" for i in range(register.length)]
 
-    reader = partial(reader, columns=[name])
+    reader = partial(reader, columns=columns)
     return RegisterReader(register, reader)
 
 
